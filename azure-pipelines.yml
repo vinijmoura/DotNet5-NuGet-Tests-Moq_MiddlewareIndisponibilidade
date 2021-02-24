@@ -13,18 +13,16 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '5.0.103'
-- task: DotNetCoreCLI@2
+
+- script: dotnet test $(CAMINHO_PROJETO_TESTES) --verbosity minimal --logger:"html;LogFileName=resultado-testes.html" --collect:"XPlat Code Coverage"
   displayName: 'Run DotNet test'
-  inputs:
-    command: 'test'
-    projects: '$(CAMINHO_PROJETO_TESTES)'
 
 - script: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.6
   displayName: 'Install Report Generator'
   condition: always()
 
 - script: |
-    cd /home/vsts/work/_temp
+    cd Groffe.AspNetCore.Indisponibilidade.Testes/TestResults
     ls
     cd $(ls -d */|head -n 1)
     reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
