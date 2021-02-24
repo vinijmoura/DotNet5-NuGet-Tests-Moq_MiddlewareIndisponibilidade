@@ -26,7 +26,7 @@ steps:
   condition: always()
   
 - script: |
-    cd /Groffe.AspNetCore.Indisponibilidade.Testes/TestResults
+    cd Groffe.AspNetCore.Indisponibilidade.Testes/TestResults
     cd $(ls -d */|head -n 1)
     reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
   displayName: 'Run ReportGenerator'
