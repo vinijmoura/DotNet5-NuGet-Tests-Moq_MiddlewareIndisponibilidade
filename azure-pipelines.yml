@@ -32,7 +32,7 @@ steps:
   condition: always()
   
 - script: |
-    cd ${{ env.CAMINHO_PROJETO_TESTES }}/TestResults
+    cd ./Groffe.AspNetCore.Indisponibilidade.Testes/TestResults
     cd $(ls -d */|head -n 1)
     reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
   displayName: 'Run ReportGenerator'
