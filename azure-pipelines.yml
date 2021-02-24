@@ -61,11 +61,8 @@ stages:
         command: 'pack'
         packagesToPack: '$(CAMINHO_PROJETO)'
         versioningScheme: 'off'
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'push'
-        packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-        nuGetFeedType: 'external'
-        publishFeedCredentials: 'Nuget'
-      
 
+    - script: |
+        cd $(Build.ArtifactStagingDirectory)
+        dotnet nuget push *.nupkg --api-key $(NUGET_API_KEY) --source $(NUGET_SERVER) --skip-duplicate
+      displayName: 'Publish Package'
