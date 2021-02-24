@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <PackageId>Groffe.AspNetCore.Indisponibilidade</PackageId>
-    <Version>1.0.0</Version>
+    <PackageId>Vinicius.AspNetCore.Indisponibilidade</PackageId>
+    <Version>1.0.1</Version>
     <Authors>Renato Groffe</Authors>
     <Company>Groffe</Company>
     <PackageTags>NuGet;.NET;Classlib;Middleware;Indisponibilidade</PackageTags>
