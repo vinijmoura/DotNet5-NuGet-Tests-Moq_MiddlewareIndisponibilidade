@@ -24,7 +24,7 @@ steps:
   condition: always()
 
 - script: |
-    cd Groffe.AspNetCore.Indisponibilidade.Testes/bin/Debug/net5.0
+    cd /home/vsts/work/_temp
     ls
     cd $(ls -d */|head -n 1)
     reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
