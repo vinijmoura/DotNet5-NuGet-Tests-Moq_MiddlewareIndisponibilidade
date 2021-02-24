@@ -23,16 +23,15 @@ steps:
   displayName: 'Run DotNet test'
   inputs:
     command: 'test'
-    projects: './Groffe.AspNetCore.Indisponibilidade.Testes'
+    projects: '$(CAMINHO_PROJETO_TESTES)'
     arguments: '--verbosity minimal --logger:"html;LogFileName=resultado-testes.html" --collect:"XPlat Code Coverage"'
-    publishTestResults: true
 
 - script: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.6
   displayName: 'Install ReportGenerator'
   condition: always()
   
 - script: |
-    cd ./Groffe.AspNetCore.Indisponibilidade.Testes/TestResults
+    cd $(CAMINHO_PROJETO_TESTES)/TestResults
     cd $(ls -d */|head -n 1)
     reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
   displayName: 'Run ReportGenerator'
@@ -41,6 +40,6 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish test results'
   inputs:
-    PathtoPublish: './Groffe.AspNetCore.Indisponibilidade.Testes/TestResults/'
+    PathtoPublish: '$(CAMINHO_PROJETO_TESTES)/TestResults/'
     ArtifactName: 'resultado-testes'
     publishLocation: 'Container'
