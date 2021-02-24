@@ -7,34 +7,68 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- task: UseDotNet@2
-  displayName: 'Install .Net Core'
-  inputs:
-    packageType: 'sdk'
-    version: '5.0.103'
+stages:
+- stage: BuildTest
+  jobs:
+  - job: BuildTest
+    pool:
+      vmImage: 'ubuntu-latest'
 
-- script: dotnet test $(CAMINHO_PROJETO_TESTES) --verbosity minimal --logger:"html;LogFileName=resultado-testes.html" --collect:"XPlat Code Coverage"
-  displayName: 'Run DotNet test'
+      steps:
+      - task: UseDotNet@2
+        displayName: 'Install .Net Core'
+        inputs:
+          packageType: 'sdk'
+          version: '5.0.103'
 
-- script: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.6
-  displayName: 'Install Report Generator'
-  condition: always()
+      - script: dotnet test $(CAMINHO_PROJETO_TESTES) --verbosity minimal --logger:"html;LogFileName=resultado-testes.html" --collect:"XPlat Code Coverage"
+        displayName: 'Run DotNet test'
 
-- script: |
-    cd Groffe.AspNetCore.Indisponibilidade.Testes/TestResults
-    ls
-    cd $(ls -d */|head -n 1)
-    reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
-  displayName: 'Run Report Generator'
-  condition: always()
+      - script: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.6
+        displayName: 'Install Report Generator'
+        condition: always()
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Upload Artifact Test Result'
-  condition: always()
-  inputs:
-    PathtoPublish: 'Groffe.AspNetCore.Indisponibilidade.Testes/TestResults'
-    ArtifactName: 'resultado-testes'
-    publishLocation: 'Container'
+      - script: |
+          cd Groffe.AspNetCore.Indisponibilidade.Testes/TestResults
+          ls
+          cd $(ls -d */|head -n 1)
+          reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
+        displayName: 'Run Report Generator'
+        condition: always()
 
+      - task: PublishBuildArtifacts@1
+        displayName: 'Upload Artifact Test Result'
+        condition: always()
+        inputs:
+          PathtoPublish: 'Groffe.AspNetCore.Indisponibilidade.Testes/TestResults'
+          ArtifactName: 'resultado-testes'
+          publishLocation: 'Container'
+
+- stage: Deploy
+  dependsOn: BuildTest
+  jobs:
+  - job: Deploy
+    pool:
+      vmImage: 'ubuntu-latest'
+
+      steps:
+      - task: UseDotNet@2
+        displayName: 'Install .Net Core'
+        inputs:
+          packageType: 'sdk'
+          version: '5.0.103'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Create Package'
+        inputs:
+          command: 'pack'
+          packagesToPack: '$(CAMINHO_PROJETO)'
+          versioningScheme: 'off'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'push'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+          nuGetFeedType: 'external'
+          publishFeedCredentials: 'Nuget'
+      
 
