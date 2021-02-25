@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>Vinicius.AspNetCore.Indisponibilidade</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Renato Groffe</Authors>
     <Company>Groffe</Company>
     <PackageTags>NuGet;.NET;Classlib;Middleware;Indisponibilidade</PackageTags>
