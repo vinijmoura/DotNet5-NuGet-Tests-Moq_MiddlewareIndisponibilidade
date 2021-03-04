@@ -29,7 +29,8 @@ stages:
         cd Groffe.AspNetCore.Indisponibilidade.Testes/TestResults
         ls
         cd $(ls -d */|head -n 1)
-        pwd
+        echo "##vso[task.setvariable variable=CurrentDir]$PWD"
+        echo %CurrentDir%
         reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
       displayName: 'Run Report Generator'
       condition: always()
