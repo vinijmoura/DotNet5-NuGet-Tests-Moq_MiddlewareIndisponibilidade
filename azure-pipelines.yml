@@ -46,8 +46,7 @@ stages:
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'
-        summaryFileLocation: 'Report Generator'
-        pathToSources: '$(CurrentDir)/coverage.cobertura.xml'
+        summaryFileLocation: '$(CurrentDir)/coverage.cobertura.xml'
         reportDirectory: '$(CurrentDir)'
       displayName: 'Publish Report Generator on Summary'
       condition: always()
