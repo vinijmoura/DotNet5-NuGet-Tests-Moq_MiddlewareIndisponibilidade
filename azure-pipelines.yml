@@ -35,7 +35,7 @@ stages:
 
     - task: reportgenerator@4
       inputs:
-        reports: 'coverage.xml'
+        reports: 'coverage.cobertura.xml'
         targetdir: 'coveragereport'
         sourcedirs: 'Groffe.AspNetCore.Indisponibilidade.Testes/TestResults'
       condition: always()
