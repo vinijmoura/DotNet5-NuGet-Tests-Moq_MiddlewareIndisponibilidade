@@ -43,6 +43,15 @@ stages:
       condition: always()
       displayName: 'Run Report Generator Extension'
 
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: 'Report Generator'
+        pathToSources: '$(CurrentDir)/coverage.cobertura.xml'
+        reportDirectory: '$(CurrentDir)'
+      displayName: 'Publish Report Generator on Summary'
+      condition: always()
+
     - task: PublishBuildArtifacts@1
       displayName: 'Upload Artifact Test Result'
       condition: always()
