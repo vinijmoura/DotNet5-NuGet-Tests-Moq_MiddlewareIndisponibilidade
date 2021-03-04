@@ -39,7 +39,7 @@ stages:
         reports: 'coverage.cobertura.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
-        sourcedirs: '$(Build.SourcesDirectory)/target/reports/coverage/'
+        sourcedirs: '$(Build.SourcesDirectory)/Groffe.AspNetCore.Indisponibilidade.Testes/TestResults'
       condition: always()
       displayName: 'Run Report Generator Extension'
 
