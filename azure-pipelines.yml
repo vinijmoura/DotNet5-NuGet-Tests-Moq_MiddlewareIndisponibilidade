@@ -36,10 +36,10 @@ stages:
 
     - task: reportgenerator@4
       inputs:
-        reports: 'coverage.cobertura.xml'
+        reports: '$(Build.SourcesDirectory)/Groffe.AspNetCore.Indisponibilidade.Testes/TestResults/**/coverage.cobertura.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
-        sourcedirs: '$(Build.SourcesDirectory)/Groffe.AspNetCore.Indisponibilidade.Testes/TestResults'
+        sourcedirs: '$(Build.SourcesDirectory)/Groffe.AspNetCore.Indisponibilidade.Testes/TestResults/**'
       condition: always()
       displayName: 'Run Report Generator Extension'
 
