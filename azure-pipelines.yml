@@ -18,7 +18,7 @@ stages:
         packageType: 'sdk'
         version: '5.0.103'
 
-    - script: dotnet test $(CAMINHO_PROJETO_TESTES) --verbosity minimal --logger:"html;LogFileName=resultado-testes.html" --collect:"XPlat Code Coverage" /p:CoverletOutput=$(Build.SourcesDirectory)/target/reports/coverage/'
+    - script: dotnet test $(CAMINHO_PROJETO_TESTES) --verbosity minimal --logger:"html;LogFileName=resultado-testes.html" --collect:"XPlat Code Coverage"
       displayName: 'Run DotNet test'
 
     - script: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.6
@@ -29,13 +29,14 @@ stages:
         cd Groffe.AspNetCore.Indisponibilidade.Testes/TestResults
         ls
         cd $(ls -d */|head -n 1)
+        pwd
         reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
       displayName: 'Run Report Generator'
       condition: always()
 
     - task: reportgenerator@4
       inputs:
-        reports: '$(Build.SourcesDirectory)/target/reports/coverage/coverage.opencover.xml'
+        reports: 'coverage.cobertura.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
         sourcedirs: '$(Build.SourcesDirectory)/target/reports/coverage/'
