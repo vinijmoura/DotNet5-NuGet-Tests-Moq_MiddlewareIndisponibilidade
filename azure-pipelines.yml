@@ -38,7 +38,7 @@ stages:
       inputs:
         reports: '$(CurrentDir)/coverage.cobertura.xml'
         targetdir: 'coveragereport'
-        reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
+        reporttypes: 'HtmlInline_AzurePipelines;Cobertura'
         sourcedirs: '$(CurrentDir)'
       condition: always()
       displayName: 'Run Report Generator Extension'
