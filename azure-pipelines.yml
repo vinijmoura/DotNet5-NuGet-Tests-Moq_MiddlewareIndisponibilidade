@@ -30,17 +30,16 @@ stages:
         ls
         cd $(ls -d */|head -n 1)
         echo "##vso[task.setvariable variable=CurrentDir]$PWD"
-        echo %CurrentDir%
         reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html
       displayName: 'Run Report Generator'
       condition: always()
 
     - task: reportgenerator@4
       inputs:
-        reports: '$(Build.SourcesDirectory)/Groffe.AspNetCore.Indisponibilidade.Testes/TestResults/**/coverage.cobertura.xml'
+        reports: '$(CurrentDir)/coverage.cobertura.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline_AzurePipelines;Cobertura;Badges'
-        sourcedirs: '$(Build.SourcesDirectory)/Groffe.AspNetCore.Indisponibilidade.Testes/TestResults/**'
+        sourcedirs: '$(CurrentDir)'
       condition: always()
       displayName: 'Run Report Generator Extension'
 
