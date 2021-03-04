@@ -38,6 +38,8 @@ stages:
         reports: 'coverage.xml'
         targetdir: 'coveragereport'
         sourcedirs: 'Groffe.AspNetCore.Indisponibilidade.Testes/TestResults'
+      condition: always()
+      displayName: 'Run Report Generator Extension'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Upload Artifact Test Result'
